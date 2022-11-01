@@ -17,81 +17,77 @@
       <p class="my-10 text-center font-mono text-3xl font-bold">Dictionary</p>
       <div class="mx-auto w-3/4 md:w-2/4 bg-gray-200 p-4 overflow-hidden">
         <form action="" method="POST" id="postform">
-            {% csrf_token %}
-            <div class="relative rounded-lg overflow-hidden h-auto w-full">
-                <input
-                type="text"
-                class="h-10 w-full rounded-lg p-3 outline-none font-mono text-sm"
-                id="word"
-                />
-                <button
-                type="submit"
-                class="absolute right-0 top-0 h-full px-2 flex justify-center items-center"
-                >
-                <span class="material-symbols-outlined"> search </span>
-                </button>
-            </div>
+          {% csrf_token %}
+          <div class="relative rounded-lg overflow-hidden h-auto w-full">
+            <input
+              type="text"
+              class="h-10 w-full rounded-lg p-3 outline-none font-mono text-sm"
+              id="word"
+            />
+            <button
+              type="submit"
+              class="absolute right-0 top-0 h-full px-2 flex justify-center items-center"
+            >
+              <span class="material-symbols-outlined"> search </span>
+            </button>
+          </div>
         </form>
         <div class="my-4" id="type">
-            
-            <ol class="pl-6 text-sm list-decimal" id="meaning" >
-                    
-            </ol>
+          <div class="pl-6 text-sm list-decimal" id="meaninglist"></div>
         </div>
       </div>
     </div>
   </body>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-  <script >
-
+  <script
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+    type="text/javascript"
+  ></script>
+  <script>
     function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
         for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === name + "=") {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
         }
+      }
+      return cookieValue;
     }
-    return cookieValue;
-    }
-    const csrftoken = getCookie('csrftoken');
+    const csrftoken = getCookie("csrftoken");
 
-    $('#postform').submit(function(e){
-        console.log("hanba");
-        e.preventDefault();
-        $.ajax({
-            type:'POST',
-            url:'word',
-            data:{
-                 'word':$('#word').val(),
-                 csrfmiddlewaretoken: csrftoken,
-            },
-            
-            success: function(res){
+    $("#postform").submit(function (e) {
+      console.log("hanba");
+      e.preventDefault();
+      $.ajax({
+        type: "POST",
+        url: "word",
+        data: {
+          word: $("#word").val(),
+          csrfmiddlewaretoken: csrftoken,
+        },
 
-            type = document.getElementById('type');
-            meaning = document.getElementById('meaning');
+        success: function (res) {
+          type = document.getElementById("type");
+          mean = document.getElementById("meaninglist");
 
-            res = JSON.parse(res)
-            for(var i in res){
-                console.log(res[i])
-                type.innerHTML += `<h1 class="font-bold" >${i}:</h1>`;
-                arr = res[i];
-                console.log(arr)
-                for(var j=0;j<arr.length;j++){
-                    meaning.innerHTML += `<li>${arr.j}</li>`;
-                }
+          res = JSON.parse(res);
+          for (var i in res) {
+            type.innerHTML += `<h1 class="font-bold mb-2" >${i}:</h1>`;
+            arr = res[i];
+            console.log(arr);
+            for (var j = 0; j < arr.length; j++) {
+                type.innerHTML += `<h1 class="text-sm text-gray-700">${j+1}.${arr[j]}</h1>`;
 
             }
-    
-            console.log(Object.keys(res).length)
-            }
-        });
-    })
+          }
+
+        },
+      });
+    });
   </script>
 </html>
