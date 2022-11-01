@@ -8,7 +8,6 @@ def index(request):
 
 
 def meaning(request):
-    print("python is")
     if request.method == "POST":
         word = request.POST['word']
         if word == "":

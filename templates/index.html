@@ -76,16 +76,19 @@
           mean = document.getElementById("meaninglist");
 
           res = JSON.parse(res);
+          mankind = "";
           for (var i in res) {
-            type.innerHTML += `<h1 class="font-bold mb-2" >${i}:</h1>`;
+            mankind += `<h1 class="font-bold mb-2" >${i}:</h1>`;
             arr = res[i];
-            console.log(arr);
-            for (var j = 0; j < arr.length; j++) {
-                type.innerHTML += `<h1 class="text-sm text-gray-700">${j+1}.${arr[j]}</h1>`;
 
+            for (var j = 0; j < arr.length; j++) {
+              mankind += `<h1 class="text-sm text-gray-700">${j + 1}.${
+                arr[j]
+              }</h1>`;
             }
           }
-
+          type.innerHTML = mankind;
+          mankind = "";
         },
       });
     });
