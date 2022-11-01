@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!---->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link
       rel="stylesheet"
@@ -31,15 +32,11 @@
                 </button>
             </div>
         </form>
-        <div class="my-4">
-          {% for i,j in data.items %}
-            <h1 class="font-bold">{{i}}:</h1>
-            <ol class="pl-6 text-sm list-decimal">
-                {% for meaning in j %}
-                    <li class="">{{meaning}}</li>
-                {% endfor %}
+        <div class="my-4" id="type">
+            
+            <ol class="pl-6 text-sm list-decimal" id="meaning" >
+                    
             </ol>
-          {% endfor %}  
         </div>
       </div>
     </div>
@@ -76,12 +73,23 @@
             },
             
             success: function(res){
-            for (const key in res){
-                if(key.hasOwnProperty(key)){
-                    console.log(key)
+
+            type = document.getElementById('type');
+            meaning = document.getElementById('meaning');
+
+            res = JSON.parse(res)
+            for(var i in res){
+                console.log(res[i])
+                type.innerHTML += `<h1 class="font-bold" >${i}:</h1>`;
+                arr = res[i];
+                console.log(arr)
+                for(var j=0;j<arr.length;j++){
+                    meaning.innerHTML += `<li>${arr.j}</li>`;
                 }
+
             }
-            console.log(res)
+    
+            console.log(Object.keys(res).length)
             }
         });
     })
